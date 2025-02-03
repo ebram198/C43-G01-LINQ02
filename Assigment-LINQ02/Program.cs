@@ -1,6 +1,11 @@
 ﻿
 using Linq02;
 using System.Collections;
+using System.Collections.Generic;
+using System.Net.WebSockets;
+using static System.Net.Mime.MediaTypeNames;
+using System.Runtime.Intrinsics.X86;
+using System.Text.RegularExpressions;
 
 namespace Assigment_LINQ02
 
@@ -308,13 +313,13 @@ namespace Assigment_LINQ02
 
 
             #region 5. Create one sequence that contains the last Three Characters in each name of all customers and products, including any duplicates
-            
-            
-            
-            
-            
+
+
+
+
+
             //var result01 = ListGenerator.ProductList.Where(x => x.ProductName.Length >= 3).Select(p => p.ProductName.Substring(p.ProductName.Length - 3));
-           
+
             //var result02 = ListGenerator.CustomerList.Where(x => x.CustomerName.Length >= 3).Select(p => p.CustomerName.Substring(p.CustomerName.Length-3));
             //var finalresult = result01.Concat(result02);
             //foreach (var item in finalresult)
@@ -339,14 +344,157 @@ namespace Assigment_LINQ02
 
             #endregion
 
+            #region LINQ - Partitioning Operators
+
+            #region 1. Get the first 3 orders from customers in Washington
+            //var result = ListGenerator.CustomerList
+            //    .Where(x => x.City == "Washington")
+            //    .SelectMany(c => c.Orders)
+            //    .Take(3);
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            #endregion
+
+
+            #region 2. Get all but the first 2 orders from customers in Washington.
+            //var result = ListGenerator.CustomerList
+            //    .Where(x => x.City == "Washington")
+            //    .SelectMany(c => c.Orders)
+            //    .Skip(2);
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            #endregion
+
+            #region 3. Return elements starting from the beginning of the array until a number is hit that is less than its position in the array.
+
+
+            //int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            //var result = numbers.TakeWhile((x, i) => x >= i);
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            #endregion
+
+            #region 4. Get the elements of the array starting from the first element divisible by 3
+
+            //int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+            //var result = numbers.SkipWhile(x => x % 3 != 0); 
+
+            //foreach (int x in result)
+            //{
+            //    Console.WriteLine(x); 
+            //}
+            #endregion
+
+            #region 5. Get the elements of the array starting from the first element less than its position.
+            //int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+            //var result = numbers.SkipWhile((x, i) => x >= i);
+            //foreach (var i in result)
+            //{
+            //    Console.WriteLine(i);
+            //}
+            #endregion
+
+            #endregion
+
+            #region LINQ - Quantifiers
+
+            #region 1. Determine if any of the words in dictionary_english.txt (Read dictionary_english.txt into Array of String First) contain the substring 'ei'.
+            //string[] words = File.ReadAllLines("dictionary_english.txt");
+
+            //bool result = words.Any(word => word.Contains("ei"));
+            //Console.WriteLine(result ? "At least one word contains 'ei'." : "No word  contains the  'ei'.");
+
+            #endregion
+
+
+            #region 2. Return a grouped a list of products only for categories that have at least one product that is out of stock.
+
+            //var result = ListGenerator.ProductList.GroupBy(x => x.Category).Where(p => p.Any(m => m.UnitsInStock == 0));
+            //foreach (var group in result)
+            //{
+            //    Console.WriteLine($"Category: {group.Key}"); 
+            //    foreach (var product in group) 
+            //    {
+            //        Console.WriteLine($"  {product}");
+            //    }
+            //}
 
 
 
 
+            #endregion
+
+
+            #region 3. Return a grouped a list of products only for categories that have all of their products in stock.
+
+            //var result = ListGenerator.ProductList.GroupBy(x => x.Category).Where(p => p.Any(m => m.UnitsInStock != 0));
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item.Key);
+            //    foreach (var i in item) 
+            //    {
+            //        Console.WriteLine(i);
+            //    }
+            //}
+
+
+            #endregion
 
 
 
+            #endregion
 
+            #region LINQ – Grouping Operators
+
+            #region 1. Use group by to partition a list of numbers by their remainder when divided by 5
+
+
+            //List<int> numbers = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+            //var result=numbers.GroupBy(x => x %5);
+
+            //foreach (var x in result)
+            //{
+            //    Console.WriteLine($"Numbers with remainder {x.Key} when divided by 5:");
+            //    foreach (var y in x) Console.WriteLine(y);
+            //}
+
+            #endregion
+
+
+            #region Uses group by to partition a list of words by their first letter Use dictionary_english.txt for Input
+
+
+
+            #endregion
+
+
+
+            #region Consider this Array as an Input
+
+            String[] Arr = { "from", "salt", "earn", " last", "near", "form" };
+            var result = Arr.GroupBy(x => new string(x.ToCharArray().OrderBy(d => d).ToArray()));
+
+            foreach (var group in result)
+            {
+                Console.WriteLine("Group: [" + string.Join(", ", group) + "]");
+            }
+
+            #endregion
+
+            #endregion
 
 
 
